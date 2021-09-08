@@ -1,8 +1,8 @@
 # python_intro.py
 """Python Essentials: Introduction to Python.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Math 321 Sec 002
+September 8
 """
 
 #Problem 1
@@ -13,8 +13,6 @@ def isolate(a, b, c, d, e):
     
     return
 
-print(isolate(1,2,3,4,5))
-
 
 #Problem 2
 def first_half(string):
@@ -22,11 +20,9 @@ def first_half(string):
     
     n = len(string)
     
-    newstring = string[:n//2]
+    newstring = string[:n//2] 
     
     return newstring
-
-print(first_half("hello"))
 
 
 def backward(first_string):
@@ -36,7 +32,6 @@ def backward(first_string):
     
     return newstring
 
-print(backward("hello!"))
 
 
 #Problem 3
@@ -46,23 +41,21 @@ def list_ops():
     mylist = ["bear", "ant", "cat", "dog"]
     
     mylist.append("eagle")
-    print(mylist)
+    
     mylist.remove("cat")
     mylist.insert(2,"fox")
     mylist.pop(1)
-    print(mylist)
+    
     mylist.sort(reverse=True)
-    print(mylist)
+    
     x = mylist.index("eagle")
     mylist.remove("eagle")
     mylist.insert(x,"hawk")
-    print(mylist)
+    
     y = len(mylist)
     mylist[y-1] = mylist[y-1] + "hunter"
     
     return mylist
-
-print(list_ops())
 
 
 #Problem 4
@@ -71,14 +64,14 @@ def alt_harmonic(n):
     harmonic series. Use this function to approximate ln(2).
     """
     
-    
     nlist = [((-1)**(i+1))/i for i in range (1,n+1)]
     
     return sum(nlist)
-print(alt_harmonic(500000))
 
 
 import numpy as np
+#import numpy module
+
 def prob5(A):
     """Make a copy of 'A' and set all negative entries of the copy to 0.
     Return the copy.
@@ -95,7 +88,6 @@ def prob5(A):
     
     return B
 
-print(prob5(np.array([-3,-1,3])))
 
 def prob6():
     """Define the matrices A, B, and C as arrays. Return the block matrix
@@ -105,28 +97,19 @@ def prob6():
     where I is the 3x3 identity matrix and each 0 is a matrix of all zeros
     of the appropriate size.
     """
-    
+    # Create Matrices A, B, and C
     A = np.arange(6).reshape(3,2).transpose()
     B = np.full((3,3),3)
     B = np.tril(B)
     C = np.diag([-2,-2,-2])
-    print(A)
-    print(B)
-    print(C)
-    print(np.shape(A.T))
-    
-    D = np.hstack((np.zeros((3,4)), A.T, np.eye(3)))
-    print(np.shape(D))
-    E = np.hstack((A,np.zeros((2,3)),np.zeros((2,3))))
-    print(np.shape(E))
-    F = np.hstack((B,np.zeros((3,3)),C))
-    print(np.shape(F))
+    # Create new matrices stacking each column
+    D = np.hstack((np.zeros((3,3)), A.T, np.eye(3)))
+    E = np.hstack((A,np.zeros((2,2)),np.zeros((2,3))))
+    F = np.hstack((B,np.zeros((3,2)),C))
+    # Create final matrix by stacking the rows D, E and F
     G = np.vstack((D,E,F))
-    print(G)
     
     return G
-
-print(prob6())
 
 
 def prob7(A):
@@ -140,27 +123,30 @@ def prob7(A):
                [ 0.33333333,  0.33333333,  0.33333333]])
     """
     
-    sums = np.sum(A, axis=1)
+    sums = np.sum(A, axis=1) #A matrix of sums along each row
     
     A = A.T/sums
          
     return A.T
-
-print(prob7(np.array([[1,1,0],[0,1,0],[1,1,1]])))
 
 def prob8():
     """Given the array stored in grid.npy, return the greatest product of four
     adjacent numbers in the same direction (up, down, left, right, or
     diagonally) in the grid.
     """
-    grid = np.load("grid.npy")
+    grid = np.load("grid.npy") # Upload grid
     
-    print(grid)
+    # Find max along horizontal
+    rowwinner = np.max(grid[:,:-3] * grid[:,1:-2] * grid[:,2:-1] * grid[:,3:])
+    # Find max along verticle
+    columnwinner = np.max(grid.T[:,:-3] * grid.T[:,1:-2] * grid.T[:,2:-1] * grid.T[:,3:])
+    # Find max along right diagonal
+    rdiagonal = np.max(grid[:-3,:-3] * grid[1:-2,1:-2] * grid[2:-1,2:-1] * grid[3:,3:])
+    # Find max along left diagonal
+    ldiagonal = np.max(grid[:-3,3:] * grid[1:-2,2:-1] * grid[2:-1,1:-2] * grid[3:,:-3])
     
     
-    return
-
-print(prob8())
+    return max(rowwinner, columnwinner, rdiagonal, ldiagonal)
 
 
 
