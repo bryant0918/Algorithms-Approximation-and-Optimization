@@ -1,0 +1,6 @@
+09/13/21 17:13
+
+SyntaxError while loading 'object_oriented.py': unexpected EOF while parsing (object_oriented.py, line 262)
+
+-------------------------------------------------------------------------------
+
