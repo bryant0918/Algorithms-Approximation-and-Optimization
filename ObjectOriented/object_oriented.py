@@ -68,26 +68,22 @@ class Backpack:
             return False
     
     def __str__(self):
-        """Prints the owner, color, size, max_size, and contents of the backpack."""
+        """Returns a string of the owner, color, size, max_size, and contents of the backpack."""
         
-        print("Owner: \t", self.name, "\n"
-              "Color: \t", self.color, "\n"
-              "Size: \t", len(self.contents), "\n"
-              "Max Size: \t", self.max_size, "\n"
-              "Contents: \t", self.contents)
-        
-        
+        return "Owner: \t\t"+ str(self.name)+ "\nColor: \t\t"+ str(self.color)+ "\nSize: \t\t"+ str(len(self.contents))+ "\nMax Size: \t"+ str(self.max_size)+ "\nContents: \t"+ str(self.contents)
         
 
 def test_backpack():
+    """Tests my backpack class"""
     testpack = Backpack("Bryant", "black")
     if testpack.name != "Bryant":
         print("Backpack.name assigned incorrectly")
     for item in ["pencil", "pen", "paper", "computer"]:
         testpack.put(item)
-    print("Contents: ", testpack.contents)
+    #print("Contents: ", testpack.contents)
+    print(str(testpack))
     
-test_backpack()
+#test_backpack()
 
 # An example of inheritance. You are not required to modify this class.
 class Knapsack(Backpack):
@@ -172,56 +168,120 @@ class Jetpack(Backpack):
         
     def dump(self):
         """Dumps all the contents of the jetpack including the fuel."""
-        self.contents = []
+        self.contents = [] #Backpack.dump(self)
         self.fuel = 0
 
 # Problem 4: Write a 'ComplexNumber' class.
 class ComplexNumber:
+    """ Create a class of Complex Numbers and various operations on them"""
     
     def __init__(self, real, imag):
         self.real = real
         self.imag = imag
-        
+            
     def conjugate(self):
-        
+        """Define the Conjugate"""
         return ComplexNumber(self.real, self.imag*-1)
     
     def __str__(self):
-        if self.imag < 0:
-            print(self.real,"-",self.imag,"j")
+        """Return the complex number in the form of a string"""
+        a = self.real
+        b = self.imag
+        
+        if a == 0:
+            return str(b)+"j"
         else:
-            print(self.real, "+", self.imag, "j")
+            if self.imag < 0:
+                return "("+str(a)+str(b)+"j)"
+            else:
+                return "("+str(a)+"+"+str(b)+"j)"
         
     def __abs__(self):
-        
+        """Define absolute value as the magnitude"""
         return np.sqrt((self.real*self.real)+(self.imag*self.imag))
     
-    def __eq__(self):
-        
-        if (self.real, self.imag) == (self.real, self.imag):
+    def __eq__(self, other):
+        """Compare equality"""
+        if (self.real, self.imag) == (other.real, other.imag):
             return True
         else:
             return False
     
     def __add__(self, other):
+        """Add operator"""
         newreal = self.real + other.real
         newimag = self.imag + other.imag
         return ComplexNumber(newreal, newimag)
 
     def __sub__(self, other):
+        """Subtract operator"""
         newreal = self.real - other.real
         newimag = self.imag - other.imag
         return ComplexNumber(newreal, newimag)
     
     def __mul__(self, other):
-        newreal = self.real * self.real
-        newimag = (self.imag * self.imag) * -1
+        """Multiply operator"""
+        newreal = (self.real * other.real) + (-1 * (self.imag * other.imag))
+        newimag = (self.real * other.imag) + (self.imag * other.real)
         return ComplexNumber(newreal, newimag)
     
     def __truediv__(self,other):
+        """Divide operator"""
+        newreal = ((self.real * other.real) + (self.imag * other.imag)) / (other.real**2 + other.imag**2)
+        newimag = ((self.imag * other.real) - (self.real * other.imag)) / (other.real**2 + other.imag**2)
+        return ComplexNumber(newreal, newimag)
         
         
 
+def test_ComplexNumber(a, b):
+    """Tests my ComplexNumber class"""
+    py_cnum, my_cnum = complex(a, b), ComplexNumber(a, b)
+    # Validate the constructor.
+    if my_cnum.real != a or my_cnum.imag != b:
+        print("__init__() set self.real and self.imag incorrectly")
+        # Validate conjugate() by checking the new number's imag attribute.
+    if py_cnum.conjugate().imag != my_cnum.conjugate().imag:
+        print("conjugate() failed for", py_cnum)
+        # Validate __str__().
+    if str(py_cnum) != str(my_cnum):
+        print(str(py_cnum))
+        print(str(my_cnum))
+        print("__str__() failed for", py_cnum)
+    #Test the rest of the magic methods
+    if abs(py_cnum) != abs(my_cnum):
+        print("abs failed")
+    if (py_cnum + py_cnum) != (my_cnum + my_cnum):
+        print("+ doesn't work")
+    if (py_cnum - py_cnum) != (my_cnum - my_cnum):
+        print("- doesn't work")
+    if (py_cnum * py_cnum) != (my_cnum * my_cnum):
+        print("* doesn't work")
+    if (py_cnum / py_cnum) != (my_cnum / my_cnum):
+        print("/ doesn't work")
+    print("Good job young patowan")
+        
+
+#test_ComplexNumber(0,-4)
+"""
+def test_CompNum():
+    test1 = ComplexNumber(1,5)
+    test2 = ComplexNumber(20,-4)
+    test3 = ComplexNumber(3,2)
+    print(ComplexNumber.__str__(test1))
+    print(ComplexNumber.__str__(test2))
+    print(ComplexNumber.conjugate(test1))
+    print(ComplexNumber.conjugate(test2))
+    print(abs(test1))
+    print(abs(test2))
+    print(test1 == test2)
+    print(test1 == test3)
+    print(test1 + test2)
+    print(test1 - test2)
+    print(test1 * test2)
+    print(test2 / test3)
+    
+test_CompNum()
+"""
 
 
 
