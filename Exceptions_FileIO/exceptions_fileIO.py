@@ -1,11 +1,18 @@
 # exceptions_fileIO.py
 """Python Essentials: Exceptions and File Input/Output.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+September 16, 2021
+Math 321 sec 002
 """
 
 from random import choice
+import numpy as np
+
+mylist = [1,2,3]
+print(mylist)
+mylist = mylist.insert(0,5)
+print(mylist)
+    
 
 
 # Problem 1
@@ -24,12 +31,39 @@ def arithmagic():
     
     step_1 = input("Enter a 3-digit number where the first and last "
                                            "digits differ by 2 or more: ")
+    if len(step_1) != 3:
+        raise ValueError("The number must be 3 digits!")
+    a1 = int(step_1[0])*100
+    b1 = int(step_1[1])*10
+    c1 = int(step_1[2])
+    first = a1+b1+c1
+    
+    if abs(int(step_1[0]) - int(step_1[2])) < 2:
+        raise ValueError("The first and third digits must differ by 2 or more!")
+    
     step_2 = input("Enter the reverse of the first number, obtained "
                                               "by reading it backwards: ")
+    a2 = int(step_2[0])*100
+    b2 = int(step_2[1])*10
+    c2 = int(step_2[2])
+    second = a2+b2+c2
+    if (step_2[0],step_2[1],step_2[2]) != (step_1[2], step_1[1], step_1[0]):
+        raise ValueError("That is not the first number backwards!")
+    
     step_3 = input("Enter the positive difference of these numbers: ")
-    step_4 = input("Enter the reverse of the previous result: ")
+    a3 = int(step_3[0])*100
+    b3 = int(step_3[1])*10
+    c3 = int(step_3[2])
+    third = a3+b3+c3
+    if abs(first-second) != third:
+        raise ValueError("That is not the positive difference of these numbers!")
+    
+    step_4 = input("Enter the reverse of the previous result: ") 
+    if (step_4[0],step_4[1],step_4[2]) != (step_3[2], step_3[1], step_3[0]):
+        raise ValueError("That is not the reverse of the previous number!")
     print(str(step_3), "+", str(step_4), "= 1089 (ta-da!)")
 
+#arithmagic()
 
 # Problem 2
 def random_walk(max_iters=1e12):
@@ -44,13 +78,20 @@ def random_walk(max_iters=1e12):
     
     walk = 0
     directions = [1, -1]
-    for i in range(int(max_iters)):
-        walk += choice(directions)
+    try:
+        for i in range(int(max_iters)):
+            walk += choice(directions)
+    except KeyboardInterrupt:
+        print("Process interrupted at iteration",i)
+        return walk
+    
     return walk
+
+#print(random_walk())
 
 
 # Problems 3 and 4: Write a 'ContentFilter' class.
-    """Class for reading in file
+"""Class for reading in file
         
     Attributes:
         filename (str): The name of the file
@@ -63,20 +104,71 @@ class ContentFilter(object):
         """Read from the specified file. If the filename is invalid, prompt
         the user until a valid filename is given.
         """
-    
+        valid = False
+        while not valid:
+            try:
+                with open(filename, 'r') as myfile:
+                    self.filename = myfile.name
+                    self.contents = myfile.read()
+                valid = True
+            except:
+                filename = input("Please enter a valid file name:")
+                
  # Problem 4 ---------------------------------------------------------------
     def check_mode(self, mode):
         """Raise a ValueError if the mode is invalid."""
+        if mode not in ['w', 'x', 'a']:
+            raise ValueError("the mode is invalid")
 
     def uniform(self, outfile, mode='w', case='upper'):
-        """Write the data ot the outfile in uniform case."""
+        """Write the data to the outfile in uniform case."""
+        
+        data = self.contents
+        if case == 'upper':
+            data = data.upper()
+        elif case == 'lower':
+            data = data.lower()
+        else:
+            raise ValueError("Must be upper or lower case")
+        
+        with open(outfile, mode) as myfile:
+            myfile.write(data)
 
 
-    def reverse(self, outfile, mode='w', unit='word'):
+    def reverse(self, outfile, mode='w', unit='line'):
         """Write the data to the outfile in reverse order."""
+        data = self.contents
+        newdata = []
+        print(unit)
+        if unit=="word":
+            newdata = data.split()
+            newdata.reverse()
+            x = " ".join(newdata)
+        elif unit=='line':
+            newdata = data.split('\n')
+            newdata.reverse()
+            x = "\n".join(newdata)
+        else:
+            raise ValueError("Must be line or word")
+        with open(outfile, mode) as myfile:
+            myfile.write(x)
 
     def transpose(self, outfile, mode='w'):
         """Write the transposed version of the data to the outfile."""
 
     def __str__(self):
         """String representation: info about the contents of the file."""
+
+
+"""
+if __name__ == "__main__":
+    cf = ContentFilter("cf_example2.txt")
+    print(cf.contents)
+    print(cf.filename)
+    #cf.uniform("newfile.txt")
+    cf.check_mode('w')
+    cf.reverse("reverseline.txt", 'w','word')
+""" 
+    
+
+
