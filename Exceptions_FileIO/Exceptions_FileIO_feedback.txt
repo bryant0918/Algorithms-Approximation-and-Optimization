@@ -1,0 +1,25 @@
+09/20/21 19:30
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Did not output anything.
+Score += 4
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (25 points):
+ContentFilter.transpose('_OUT_', mode='z') failed to raise a ValueError (no Exception raised)
+ContentFilter.reverse() failed
+ContentFilter.transpose('_OUT_', mode='w') failed
+TypeError: __str__ returned non-string (type NoneType)
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 24/50 = 48.0%
+
+-------------------------------------------------------------------------------
+
