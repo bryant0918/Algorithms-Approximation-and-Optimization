@@ -8,12 +8,6 @@ Math 321 sec 002
 from random import choice
 import numpy as np
 
-mylist = [1,2,3]
-print(mylist)
-mylist = mylist.insert(0,5)
-print(mylist)
-    
-
 
 # Problem 1
 def arithmagic():
@@ -84,7 +78,7 @@ def random_walk(max_iters=1e12):
     except KeyboardInterrupt:
         print("Process interrupted at iteration",i)
         return walk
-    
+    print("Process Completed")
     return walk
 
 #print(random_walk())
@@ -123,6 +117,8 @@ class ContentFilter(object):
     def uniform(self, outfile, mode='w', case='upper'):
         """Write the data to the outfile in uniform case."""
         
+        self.check_mode(mode)
+        
         data = self.contents
         if case == 'upper':
             data = data.upper()
@@ -137,38 +133,79 @@ class ContentFilter(object):
 
     def reverse(self, outfile, mode='w', unit='line'):
         """Write the data to the outfile in reverse order."""
+        self.check_mode(mode)
+        
         data = self.contents
         newdata = []
-        print(unit)
         if unit=="word":
-            newdata = data.split()
-            newdata.reverse()
-            x = " ".join(newdata)
+            
+            newdata = data.split('\n')
+            
+            for i in range(len(newdata)):
+                superdata = newdata[i].split()
+                superdata.reverse()
+                newdata[i] = " ".join(superdata)
+            
+            x = "\n".join(newdata)
+            
         elif unit=='line':
             newdata = data.split('\n')
             newdata.reverse()
             x = "\n".join(newdata)
         else:
             raise ValueError("Must be line or word")
+            
         with open(outfile, mode) as myfile:
             myfile.write(x)
-
+        
+        
     def transpose(self, outfile, mode='w'):
         """Write the transposed version of the data to the outfile."""
+        self.check_mode(mode)
+        
+        with open(self.filename, 'r') as inputfile:
+            with open(outfile, mode) as myfile:
+                x = np.loadtxt(inputfile, dtype = str)
+                xtrans = x.T
+        
+        data = xtrans.tolist()
+        
+        for i in range(len(data)):
+            newdata = data[i]
+            data[i] = " ".join(newdata)
+        
+        x = "\n".join(data)
+        
+        with open(outfile, mode) as myfile:
+            myfile.write(x)
+        
+        
 
     def __str__(self):
         """String representation: info about the contents of the file."""
+        
+        s = ""
+        s = s+"Source file:\t\t\t"+self.filename + "\n"
+        s = s + "Total Characters: \t\t" + str(len(self.contents)) + "\n"
+        s = s + "Alphabetic characters: \t" + str(sum(k.isalpha() for k in self.contents)) + "\n"
+        s = s + "Numerical chcaracters: \t" + str(sum(k.isdigit() for k in self.contents)) + "\n"
+        s = s + "Whitespace characters: \t" + str(sum(k.isspace() for k in self.contents)) + "\n"
+        s = s + "Number of lines: \t\t" + str(self.contents.count("\n"))
+        
+        return s
+        
 
 
-"""
+
 if __name__ == "__main__":
-    cf = ContentFilter("cf_example2.txt")
+    cf = ContentFilter("cf_example1.txt")
     print(cf.contents)
     print(cf.filename)
     #cf.uniform("newfile.txt")
     cf.check_mode('w')
-    cf.reverse("reverseline.txt", 'w','word')
-""" 
-    
+    cf.reverse("reverseword.txt", 'w','word')
+    #cf.transpose("transpose.txt")
+    print(str(cf))
+    pass
 
 
