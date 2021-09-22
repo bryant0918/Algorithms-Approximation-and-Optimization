@@ -137,6 +137,8 @@ class ContentFilter(object):
         
         data = self.contents
         newdata = []
+        
+        #Switching all the words on each line
         if unit=="word":
             
             newdata = data.split('\n')
@@ -147,14 +149,16 @@ class ContentFilter(object):
                 newdata[i] = " ".join(superdata)
             
             x = "\n".join(newdata)
-            
+        
+        #switching just the lines
         elif unit=='line':
             newdata = data.split('\n')
             newdata.reverse()
             x = "\n".join(newdata)
         else:
             raise ValueError("Must be line or word")
-            
+        
+        #Write the data to the outfile
         with open(outfile, mode) as myfile:
             myfile.write(x)
         
@@ -163,19 +167,23 @@ class ContentFilter(object):
         """Write the transposed version of the data to the outfile."""
         self.check_mode(mode)
         
+        #Open the contents and immediately put it into an array
         with open(self.filename, 'r') as inputfile:
             with open(outfile, mode) as myfile:
                 x = np.loadtxt(inputfile, dtype = str)
                 xtrans = x.T
         
+        #Take the transpose of the data as a list
         data = xtrans.tolist()
         
+        #Join the words
         for i in range(len(data)):
             newdata = data[i]
             data[i] = " ".join(newdata)
-        
+        #Join the lines
         x = "\n".join(data)
         
+        #Write it to the outfile
         with open(outfile, mode) as myfile:
             myfile.write(x)
         
@@ -198,7 +206,7 @@ class ContentFilter(object):
 
 
 if __name__ == "__main__":
-    cf = ContentFilter("cf_example1.txt")
+    cf = ContentFilter("hello_world.txt")
     print(cf.contents)
     print(cf.filename)
     #cf.uniform("newfile.txt")
