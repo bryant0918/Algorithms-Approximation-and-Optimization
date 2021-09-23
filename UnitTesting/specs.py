@@ -108,7 +108,7 @@ class Fraction(object):
             raise ZeroDivisionError("cannot divide by zero")
         return Fraction(self.numer*other.denom, self.denom*other.numer)
     
-print(Fraction(1,2) == float(Fraction(1,2)))
+#print(Fraction(1,2) == float(Fraction(1,2)))
 
 
 # Problem 6
