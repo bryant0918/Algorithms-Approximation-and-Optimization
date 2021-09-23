@@ -1,8 +1,8 @@
 # specs.py
 """Python Essentials: Unit Testing.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Math 321
+September 23
 """
 
 def add(a, b):
@@ -20,7 +20,7 @@ def divide(a, b):
 def smallest_factor(n):
     """Return the smallest prime factor of the positive integer n."""
     if n == 1: return 1
-    for i in range(2, int(n**.5)):
+    for i in range(2, int(n**.5)+1):
         if n % i == 0: return i
     return n
 
@@ -58,6 +58,8 @@ def operate(a, b, oper):
             raise ZeroDivisionError("division by zero is undefined")
         return a / b
     raise ValueError("oper must be one of '+', '/', '-', or '*'")
+    
+#print(operate(2,0, "/"))
 
 
 # Problem 4
@@ -93,10 +95,10 @@ class Fraction(object):
             return float(self) == other
 
     def __add__(self, other):
-        return Fraction(self.numer*other.numer + self.denom*other.denom,
+        return Fraction(self.numer*other.denom + self.denom*other.numer,
                                                         self.denom*other.denom)
     def __sub__(self, other):
-        return Fraction(self.numer*other.numer - self.denom*other.denom,
+        return Fraction(self.numer*other.denom - self.denom*other.numer,
                                                         self.denom*other.denom)
     def __mul__(self, other):
         return Fraction(self.numer*other.numer, self.denom*other.denom)
@@ -105,6 +107,8 @@ class Fraction(object):
         if self.denom*other.numer == 0:
             raise ZeroDivisionError("cannot divide by zero")
         return Fraction(self.numer*other.denom, self.denom*other.numer)
+    
+print(Fraction(1,2) == float(Fraction(1,2)))
 
 
 # Problem 6
