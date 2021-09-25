@@ -23,3 +23,31 @@ Total score: 24/50 = 48.0%
 
 -------------------------------------------------------------------------------
 
+09/24/21 20:58
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (25 points):
+Your line count is 1 less than it should be.
+Score += 24
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 49/50 = 98.0%
+
+Excellent!
+
+
+Comments:
+	Excellet code quality!
+
+-------------------------------------------------------------------------------
+
