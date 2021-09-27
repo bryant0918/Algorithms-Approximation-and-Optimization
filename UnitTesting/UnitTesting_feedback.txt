@@ -1,0 +1,45 @@
+09/27/21 17:24
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 6 (10 points):
+NotImplementedError: Problem 6 Incomplete
+
+Coverage (20 points):
+One test failed; specs.py does not have 100% coverage.
+Score += 15
+
+Code Quality (5 points):
+Make sure that all functions are complete and have comments.
+Score += 0
+
+Total score: 30/50 = 60.0%
+
+-------------------------------------------------------------------------------
+
+09/27/21 17:32
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 6 (10 points):
+NotImplementedError: Problem 6 Incomplete
+
+Coverage (20 points):
+Some tests failed; specs.py does not have 100% coverage.
+Score += 10
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 30/50 = 60.0%
+
+-------------------------------------------------------------------------------
+
