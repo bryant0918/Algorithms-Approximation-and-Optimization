@@ -28,6 +28,7 @@ def smallest_factor(n):
 # Problem 2
 def month_length(month, leap_year=False):
     """Return the number of days in the given month."""
+    
     if month in {"September", "April", "June", "November"}:
         return 30
     elif month in {"January", "March", "May", "July",
@@ -45,6 +46,7 @@ def month_length(month, leap_year=False):
 # Problem 3
 def operate(a, b, oper):
     """Apply an arithmetic operation to a and b."""
+    
     if type(oper) is not str:
         raise TypeError("oper must be a string")
     elif oper == '+':
@@ -57,14 +59,14 @@ def operate(a, b, oper):
         if b == 0:
             raise ZeroDivisionError("division by zero is undefined")
         return a / b
+    
     raise ValueError("oper must be one of '+', '/', '-', or '*'")
     
-#print(operate(2,0, "/"))
-
 
 # Problem 4
 class Fraction(object):
     """Reduced fraction class with integer numerator and denominator."""
+    
     def __init__(self, numerator, denominator):
         if denominator == 0:
             raise ZeroDivisionError("denominator cannot be zero")
@@ -93,10 +95,11 @@ class Fraction(object):
             return self.numer==other.numer and self.denom==other.denom
         else:
             return float(self) == other
-
+    #fixed
     def __add__(self, other):
         return Fraction(self.numer*other.denom + self.denom*other.numer,
                                                         self.denom*other.denom)
+    #fixed
     def __sub__(self, other):
         return Fraction(self.numer*other.denom - self.denom*other.numer,
                                                         self.denom*other.denom)
@@ -108,7 +111,6 @@ class Fraction(object):
             raise ZeroDivisionError("cannot divide by zero")
         return Fraction(self.numer*other.denom, self.denom*other.numer)
     
-#print(Fraction(1,2) == float(Fraction(1,2)))
 
 
 # Problem 6
@@ -127,7 +129,44 @@ def count_sets(cards):
             - one or more cards does not have exactly 4 digits, or
             - one or more cards has a character other than 0, 1, or 2.
     """
-    raise NotImplementedError("Problem 6 Incomplete")
+    #set variables
+    okay = "012"
+    sets = 0
+    
+    #Check the number of cards in the hand
+    if len(cards) != 12:
+        raise ValueError("Must have 12 cards")
+        
+    for i in range(len(cards)):
+        #Check the number of digits of each card
+        if len(cards[i]) != 4:
+            raise ValueError("Cards must have 4 digits")
+        
+        #Check if cards are all 0, 1 or 2
+        if all(i in okay for i in cards[i]):
+            pass
+        else:
+            raise ValueError("Card digits must be base 3")
+        
+        #Check if cards repeat
+        for j in range(len(cards)):
+            if (cards[i] == cards[j]) and (i != j):
+                print(cards[i],cards[j])
+                raise ValueError("Cards cannot repeat")
+    
+    #Iterate through all cards without repeating combinations
+    for i in range(len(cards)):
+        for j in range(len(cards)):
+            for k in range(len(cards)):
+                if i < j < k:
+                    mybool = is_set(cards[i], cards[j],cards[k])
+                    if mybool == True:
+                        sets += 1
+                        print(cards[i], cards[j], cards[k])
+                
+    
+    return sets
+    
 
 def is_set(a, b, c):
     """Determine if the cards a, b, and c constitute a set.
@@ -140,4 +179,26 @@ def is_set(a, b, c):
             and c are either the same or all different for i=1,2,3,4.
         False if a, b, and c do not form a set.
     """
-    raise NotImplementedError("Problem 6 Incomplete")
+    
+    isset=0
+    
+    for i in range(4):
+        #See if all are the same and add one
+        if a[i] == b[i] == c[i]:
+            isset += 1
+        #See if all are different from each other and one
+        elif (a[i] != b[i]) and (b[i] != c[i]) and (a[i] != c[i]):
+            isset += 1
+    if isset == 4:
+        return True
+    else:
+        return False
+
+    
+    
+    
+    
+    
+    
+    
+    
