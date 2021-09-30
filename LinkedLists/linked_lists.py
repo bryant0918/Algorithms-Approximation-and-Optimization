@@ -1,7 +1,7 @@
 # linked_lists.py
 """Volume 2: Linked Lists.
-<Name>
-<Class>
+Bryant McArthur
+Sep 30, 2021
 <Date>
 """
 
@@ -15,7 +15,12 @@ class Node:
         Raises:
             TypeError: if data is not of type int, float, or str.
         """
+        
+        if type(data) not in [int, str, float]:
+            raise TypeError("Must be type int, float, or str")
+        
         self.value = data
+
 
 
 class LinkedListNode(Node):
@@ -45,25 +50,30 @@ class LinkedList:
         """
         self.head = None
         self.tail = None
+        self.length = 0
 
     def append(self, data):
         """Append a new node containing the data to the end of the list."""
         # Create a new node to store the input data.
         new_node = LinkedListNode(data)
+        
         if self.head is None:
             # If the list is empty, assign the head and tail attributes to
             # new_node, since it becomes the first and last node in the list.
             self.head = new_node
             self.tail = new_node
+            self.length += 1
         else:
             # If the list is not empty, place new_node after the tail.
             self.tail.next = new_node               # tail --> new_node
             new_node.prev = self.tail               # tail <-- new_node
             # Now the last node in the list is new_node, so reassign the tail.
             self.tail = new_node
+            self.length += 1
+            
 
     # Problem 2
-    def find(self, data):
+    def find(self, data,):
         """Return the first node in the list containing the data.
 
         Raises:
@@ -80,7 +90,18 @@ class LinkedList:
             >>> l.find('f')
             ValueError: <message>
         """
-        raise NotImplementedError("Problem 2 Incomplete")
+        
+        length = self.length
+        node = self.head
+        if node is None:
+            raise ValueError("The list is empty")
+        for i in range(length):
+            if node.value == data:
+                return node
+            else:
+                node = node.next
+            if node is None:
+                raise ValueError("The list does not contain the data")               
 
     # Problem 2
     def get(self, i):
@@ -101,7 +122,18 @@ class LinkedList:
             >>> l.get(5)
             IndexError: <message>
         """
-        raise NotImplementedError("Problem 2 Incomplete")
+        
+        if (i < 0) or (i > self.length):
+            raise IndexError("i must be from 0 to", self.length)
+            
+        node = self.head
+        
+        for k in range(i):
+            node = node.next
+        
+        return node
+            
+            
 
     # Problem 3
     def __len__(self):
@@ -118,7 +150,7 @@ class LinkedList:
             >>> len(l)
             4
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        return self.length
 
     # Problem 3
     def __str__(self):
@@ -132,7 +164,16 @@ class LinkedList:
             >>> print(l1)               |   >>> print(l2)
             [1, 3, 5]                   |   ['a', 'b', 'c']
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        
+        mystr = "["
+        node = self.head
+        for i in range(self.length-1):
+            mystr = mystr + str(node.value) + ", "
+            node = node.next
+            
+        mystr = mystr + str(node.value) + "]"
+        
+        return mystr
 
     # Problem 4
     def remove(self, data):
@@ -190,3 +231,25 @@ def prob7(infile, outfile):
         outfile (str): the file to write to.
     """
     raise NotImplementedError("Problem 7 Incomplete")
+    
+    
+
+
+
+
+
+if __name__ == "__main__":
+    
+    L = LinkedList()
+    for x in ['a', 'b', 'c', 'd', 'e']:
+        L.append(x)
+    
+    node = L.find('c')
+    node = L.get(3)
+    
+    print(str(L))
+        
+        
+        
+        
+        

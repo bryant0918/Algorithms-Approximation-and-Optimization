@@ -193,15 +193,8 @@ def is_set(a, b, c):
         return True
     else:
         return False
+    
 
-    
-hand1 = ["1022", "1122", "0100", "2021",
-             "0010", "2201", "2111", "0020",
-             "1102", "0210", "2110", "1020"]
-print(count_sets(hand1))
-    
-    
-    
     
     
     
