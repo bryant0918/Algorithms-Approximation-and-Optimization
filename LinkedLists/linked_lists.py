@@ -237,7 +237,7 @@ def prob7(infile, outfile):
 
 
 
-
+"""
 if __name__ == "__main__":
     
     L = LinkedList()
@@ -248,7 +248,7 @@ if __name__ == "__main__":
     node = L.get(3)
     
     print(str(L))
-        
+"""       
         
         
         
