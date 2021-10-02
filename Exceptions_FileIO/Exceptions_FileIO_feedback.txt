@@ -51,3 +51,27 @@ Comments:
 
 -------------------------------------------------------------------------------
 
+10/02/21 09:36
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (25 points):
+Number of lines is 1 less than it should be.
+Score += 24
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 49/50 = 98.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+

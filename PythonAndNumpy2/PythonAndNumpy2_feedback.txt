@@ -43,3 +43,42 @@ Great job!
 
 -------------------------------------------------------------------------------
 
+10/02/21 09:20
+
+Problem 1 (5 points):
+The first three inputs have 1 too many spaces between them.
+Score += 4
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (5 points):
+Score += 5
+
+Problem 4 (5 points):
+Score += 5
+
+Problem 5 (5 points):
+prob5(array([-3 -1  3])) failed to copy the array
+prob5(array([ 24 -35  48  26 -21  -5 -42  49  31 -46])) failed to copy the array
+prob5(array([-46  39  32 -42  17  24  17 -14 -27 -21])) failed to copy the array
+Score += 2
+
+Problem 6 (5 points):
+Score += 5
+
+Problem 7 (5 points):
+Score += 5
+
+Problem 8 (10 points):
+Score += 10
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 46/50 = 92.0%
+
+Great job!
+
+-------------------------------------------------------------------------------
+
