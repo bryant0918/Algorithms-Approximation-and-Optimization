@@ -1,0 +1,53 @@
+10/04/21 17:06
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (5 points):
+AttributeError: 'NoneType' object has no attribute 'value'
+
+Problem 4 (7 points):
+NotImplementedError while removing 60: Problem 4 Incomplete
+	Previous list:    [60, 11, 50, 59, 16, 19]
+NotImplementedError while removing 28: Problem 4 Incomplete
+	Previous list:    [28, 1, 5, 90, 45]
+NotImplementedError while removing 48: Problem 4 Incomplete
+	Previous list:    [80, 48, 8, 86, 53, 68, 42]
+NotImplementedError while removing 82: Problem 4 Incomplete
+	Previous list:    [89, 82, 87, 99, 80, 37]
+NotImplementedError while removing 17: Problem 4 Incomplete
+	Previous list:    [17]
+NotImplementedError while removing 5: Problem 4 Incomplete
+	Previous list:    [5]
+LinkedList.remove() failed to raise a ValueError (got a NotImplementedError instead)
+NotImplementedError: Problem 4 Incomplete
+
+Problem 5 (8 points):
+NotImplementedError while inserting -1: Problem 5 Incomplete
+	Previous list:    [10, 14, 85, 15, 69, 77]
+NotImplementedError while inserting -2: Problem 5 Incomplete
+	Previous list:    [79, 43, 20, 78, 23, 74, 86]
+NotImplementedError while inserting -2: Problem 5 Incomplete
+	Previous list:    [24, 85, 46, 65, 22]
+NotImplementedError while inserting -3: Problem 5 Incomplete
+	Previous list:    [69, 62, 38, 80, 59, 75, 78, 94, 33]
+LinkedList.insert() failed to raise an IndexError (got a NotImplementedError instead)
+NotImplementedError: Problem 5 Incomplete
+
+Problem 6 (10 points):
+AttributeError: module 'BryantMcArthur.LinkedLists.linked_lists' has no attribute 'Deque'
+
+Problem 7 (5 points):
+NotImplementedError: Problem 7 Incomplete
+
+Code Quality (5 points):
+Make sure that all functions are complete and have comments.
+Score += 0
+
+Total score: 10/50 = 20.0%
+
+-------------------------------------------------------------------------------
+
