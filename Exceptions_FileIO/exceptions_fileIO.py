@@ -193,7 +193,7 @@ class ContentFilter(object):
         """String representation: info about the contents of the file."""
         
         s = ""
-        s = s+"Source file:\t\t\t"+self.filename + "\n"
+        s = s + "Source file:\t\t\t"+self.filename + "\n"
         s = s + "Total Characters: \t\t" + str(len(self.contents)) + "\n"
         s = s + "Alphabetic characters: \t" + str(sum(k.isalpha() for k in self.contents)) + "\n"
         s = s + "Numerical chcaracters: \t" + str(sum(k.isdigit() for k in self.contents)) + "\n"

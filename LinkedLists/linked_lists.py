@@ -2,7 +2,7 @@
 """Volume 2: Linked Lists.
 Bryant McArthur
 Sep 30, 2021
-<Date>
+Math 345 Sec 002
 """
 
 
@@ -48,7 +48,7 @@ class LinkedList:
         """Initialize the head and tail attributes by setting
         them to None, since the list is empty initially.
         """
-        self.head = None
+        self.head = None               #Set the beginning head, tail and length
         self.tail = None
         self.length = 0
 
@@ -93,13 +93,19 @@ class LinkedList:
         
         length = self.length
         node = self.head
+        
+        #Raise error if the list is empty
         if node is None:
             raise ValueError("The list is empty")
+            
+        #Iterate through the list to find the data
         for i in range(length):
             if node.value == data:
                 return node
             else:
                 node = node.next
+                
+            #Raise error if the data is not in the list    
             if node is None:
                 raise ValueError("The list does not contain the data")               
 
@@ -123,11 +129,13 @@ class LinkedList:
             IndexError: <message>
         """
         
+        #Raise an IndexError if a bad index is given
         if (i < 0) or (i > self.length):
             raise IndexError("i must be from 0 to", self.length)
             
         node = self.head
         
+        #retrieve the i-th node
         for k in range(i):
             node = node.next
         
@@ -165,15 +173,21 @@ class LinkedList:
             [1, 3, 5]                   |   ['a', 'b', 'c']
         """
         
-        mystr = "["
-        node = self.head
-        for i in range(self.length-1):
-            mystr = mystr + str(node.value) + ", "
-            node = node.next
-            
-        mystr = mystr + str(node.value) + "]"
+        #if the set is empty
+        if self.length == 0:
+            return "[]"
         
-        return mystr
+        #Create the string concatenating the different node values
+        else:
+            mystr = "["
+            node = self.head
+            for i in range(self.length-1):
+                mystr = mystr + str(node.value) + ", "
+                node = node.next
+                
+            mystr = mystr + str(node.value) + "]"
+            
+            return mystr
 
     # Problem 4
     def remove(self, data):
@@ -191,7 +205,25 @@ class LinkedList:
             >>> print(l1)               |   >>> l3.remove(10)
             ['e', 'o']                  |   ValueError: <message>
         """
-        raise NotImplementedError("Problem 4 Incomplete")
+        
+        target = self.find(data)
+        head = self.head
+        
+        #If we are removing the head
+        if target == head:
+            self.head = target.next
+            head = None
+            return
+        
+        #If we are removing any other node
+        else:
+            target.prev.next = target.next
+            target.next.prev = target.prev
+        
+        #Always adjust the length
+        self.length -= 1
+        
+        
 
     # Problem 5
     def insert(self, index, data):
@@ -215,11 +247,106 @@ class LinkedList:
             >>> print(l1)               |
             ['a', 'b', 'c', 'd']        |
         """
-        raise NotImplementedError("Problem 5 Incomplete")
+        newnode = LinkedListNode(data)
+        oldnode = self.get(index)
+        
+        #If we are inserting at the head
+        if index == 0:
+            self.head.prev = newnode
+            self.head = newnode
+            self.head.next = oldnode
+            
+        #If we are inserting at the tail
+        elif index == len(L):
+            self.append(data)
+            
+        #If we are inserting in the middle
+        else:
+            oldnode.prev.next = newnode
+            oldnode.prev = newnode
+            newnode.next = oldnode
+        
+        #Always adjust the length
+        self.length += 1
 
 
 # Problem 6: Deque class.
+class Deque(LinkedList):
+    """Deque class that inherits traits from LinkedList class."""
+    
+    def __init__(self):
+        """Initialize the head and tail attributes by setting
+        them to None, since the list is empty initially.
+        """
+        self.head = None        #Inherited from the Linked List class
+        self.tail = None
+        self.length = 0
+    
+    def pop(self):
+        """
+        Remove the last node in the list and return its data
 
+        Raises
+        ------
+        ValueError
+            If the deque is empty
+
+        Returns
+        -------
+        Value of the popped node
+        """
+        
+        #If the deque is empty
+        if self.length == 0:
+            raise ValueError("The deque is empty")
+        
+        #We are removing the tail node, and returning it's value
+        else:
+            poppednode = self.tail            
+            self.tail.prev = self.tail
+            self.length -= 1            #Always remember to adjust the length
+            
+            return poppednode.value
+        
+    def popleft(self):
+        """
+        Remove the first node in the deque and return its data.  Raises a 
+        ValueError if the deque is empty when we call the remove function.
+
+        Returns
+        -------
+        Value of the popped node
+        """
+        
+        poppednode = self.head
+        self.remove(self.head.value)
+        
+        return poppednode.value
+    
+    def appendleft(self, data):
+        """
+        Insert a new node at the beginning of the deque.
+
+        Parameters
+        ----------
+        data : 
+            The value of the node you would like to insert
+
+        Returns
+        -------
+        None.
+
+        """
+        self.insert(0,data)
+        
+    def remove(*args, **kwargs):
+        """ Disabling the remove function from the Inherited Class"""
+        raise NotImplementedError("Use pop(), or popleft() for removal")
+        
+    def insert(*args, **kwargs):
+        """Disabline the insert function from the inherited class"""
+        raise NotImplementedError("Use append(), or appendleft() for insertion")
+        
 
 # Problem 7
 def prob7(infile, outfile):
@@ -230,26 +357,48 @@ def prob7(infile, outfile):
         infile (str): the file to read from.
         outfile (str): the file to write to.
     """
-    raise NotImplementedError("Problem 7 Incomplete")
+    from collections import deque
+    
+    #Create a deque
+    mystack = deque()
+    
+    #Open the infile to be read and read the lines to the stack
+    with open(infile, 'r') as myfile:
+        contents = myfile.readlines()
+        for i in range(len(contents)):
+            mystack.appendleft(contents[i])
+     
+    #Open the outfile to be written and write the lines of the stack in LIFO order.
+    with open(outfile, 'w') as myfile:
+        myfile.write("\n".join(mystack))
+        
     
     
 
 
 
 
-"""
+
 if __name__ == "__main__":
     
     L = LinkedList()
+    
     for x in ['a', 'b', 'c', 'd', 'e']:
         L.append(x)
     
-    node = L.find('c')
-    node = L.get(3)
+    #node = L.find('c')
+    #node = L.get(3)
     
-    print(str(L))
-"""       
-        
-        
+    L.remove('b')
+    
+    #print(str(L))
+    
+    D = Deque()
+    for x in [1]:
+        D.append(x)
+    
+    prob7("english.txt","outfile.txt")
+    
+    pass
         
         
