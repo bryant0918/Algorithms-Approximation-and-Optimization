@@ -173,21 +173,15 @@ class LinkedList:
             [1, 3, 5]                   |   ['a', 'b', 'c']
         """
         
-        #if the set is empty
-        if self.length == 0:
-            return "[]"
         
-        #Create the string concatenating the different node values
-        else:
-            mystr = "["
-            node = self.head
-            for i in range(self.length-1):
-                mystr = mystr + str(node.value) + ", "
-                node = node.next
-                
-            mystr = mystr + str(node.value) + "]"
+        node = self.head
+        mystring = []
+        #While there exists a node
+        while node:
+            mystring.append(node.value)
+            node = node.next
             
-            return mystr
+        return repr(mystring)
 
     # Problem 4
     def remove(self, data):
@@ -303,7 +297,8 @@ class Deque(LinkedList):
         #We are removing the tail node, and returning it's value
         else:
             poppednode = self.tail            
-            self.tail.prev = self.tail
+            self.tail.prev.next = None
+            self.tail = self.tail.prev
             self.length -= 1            #Always remember to adjust the length
             
             return poppednode.value
@@ -319,7 +314,7 @@ class Deque(LinkedList):
         """
         
         poppednode = self.head
-        self.remove(self.head.value)
+        LinkedList.remove(self, self.head.value)
         
         return poppednode.value
     
@@ -337,7 +332,7 @@ class Deque(LinkedList):
         None.
 
         """
-        self.insert(0,data)
+        LinkedList.insert(self,0,data)
         
     def remove(*args, **kwargs):
         """ Disabling the remove function from the Inherited Class"""
@@ -396,6 +391,13 @@ if __name__ == "__main__":
     D = Deque()
     for x in [1]:
         D.append(x)
+    D.appendleft(3)
+    print(D)
+    print(D.pop())
+    print(D)
+    print(D.popleft())
+    print(D)
+        
     
     prob7("english.txt","outfile.txt")
     
