@@ -1,13 +1,15 @@
 # binary_trees.py
 """Volume 2: Binary Trees.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Math 321 Sec 002
+October 7
 """
 
 # These imports are used in BST.draw().
 import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
+from matplotlib import pyplot as plt
+import random
 
 
 class SinglyLinkedListNode:
@@ -53,8 +55,17 @@ class SinglyLinkedList:
         Returns:
             (SinglyLinkedListNode): the node containing the data.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
-
+        
+        def finding(data, currentnode):
+            if currentnode is None:
+                raise ValueError(str(data) + " is not in the tree.")
+            if data == currentnode.value:
+                return currentnode
+            else:
+                return finding(data, currentnode.next)
+        
+        return finding(data, self.head)
+    
 
 class BSTNode:
     """A node class for binary search trees. Contains a value, a
@@ -118,7 +129,32 @@ class BST:
             [1, 5, 7]                           |                  (8)
             [8]                                 |
         """
-        raise NotImplementedError("Problem 2 Incomplete")
+        node = BSTNode(data)
+        
+        if self.root == None:
+            self.root = node
+        else:
+            def step(current,node):
+                    
+                if data == current.value:
+                    raise ValueError("Data is already in the BST")
+                    
+                if data < current.value:
+                    if current.left is None:
+                        current.left = node
+                        node.prev = current
+                        return
+                    else:
+                        return step(current.left,node)
+                else:
+                    if current.right is None:
+                        current.right = node
+                        node.prev = current
+                        return
+                    else:
+                        return step(current.right,node)
+                
+            return step(self.root,node)
 
     # Problem 3
     def remove(self, data):
@@ -151,7 +187,84 @@ class BST:
             >>> print(t2)                       | >>> t4.remove(5)
             []                                  | ValueError: <message>
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        
+        target = self.find(data)
+        onright = False
+        
+        def step(current):
+                if current.right is None:
+                    return current
+                else:
+                    return step(current.right)
+        
+        """If the target is the root"""
+        if target == self.root:
+            #If the root has no children
+            if (self.root.left == None) and (self.root.right == None):
+                self.root = None
+                
+            #If the root has one child
+            elif (self.root.left == None) or (self.root.right == None):
+                if self.root.left == None:
+                    child = self.root.right
+                else:
+                    child = self.root.left
+                child = self.root
+                self.root.prev = None
+
+            #If the root has two children
+            else:    
+                predecessor = step(target.left)
+                value = predecessor.value
+                
+                self.remove(value)
+                
+                target.value = value
+                
+            return
+        
+        #If the target has no children
+        elif (target.left is None) and (target.right is None):
+            parent = target.prev
+            if target.value < parent.value:
+                parent.left = None
+            else:
+                parent.right = None
+            return
+        
+        #If the target has one child
+        elif (target.left == None) or (target.right == None):
+            parent = target.prev
+            if target.left == None:
+                child = target.right
+            else:
+                child = target.left
+            
+            if target.value > parent.value:
+                onright = True
+            
+            if onright is True:
+                parent.right = child
+                child.prev = parent
+                
+            else:
+                parent.left = child
+                child.prev = parent
+            
+            return
+        
+        #If the target is just in the middle somewhere
+        else:
+                
+            predecessor = step(target.left)
+            value = predecessor.value
+            
+            self.remove(value)
+            
+            target.value = value
+            
+            
+            return 
 
     def __str__(self):
         """String representation: a hierarchical view of the BST.
@@ -317,4 +430,36 @@ def prob4():
     structure. Plot the number of elements in the structure versus the build
     and search times. Use log scales where appropriate.
     """
-    raise NotImplementedError("Problem 4 Incomplete")
+    mylist = []
+    #Open the infile to be read and read the lines to the stack
+    with open("English.txt", 'r') as myfile:
+        contents = myfile.readlines()
+        for i in range(len(contents)):
+            mylist.append(contents[i])
+    """ 
+    #Open the outfile to be written and write the lines of the stack in LIFO order.
+    with open(outfile, 'w') as myfile:
+        myfile.write("\n".join(mystack))
+    """
+    
+    n_times = [2**n for n in range(3,11)]
+    
+    for n in n_times:
+        
+        elements = []
+        for i in range(n):
+            elements.append(random.choice(mylist))
+    
+    
+        
+
+
+if __name__ == "__main__":
+    tree = BST()
+    for i in [4,5,2,8,6,9,1]:
+        tree.insert(i)
+    print(tree)
+    tree.remove(5)
+        
+    print(str(tree))
+    pass
