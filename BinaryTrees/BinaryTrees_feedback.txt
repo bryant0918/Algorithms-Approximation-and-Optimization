@@ -35,3 +35,36 @@ Comments:
 
 -------------------------------------------------------------------------------
 
+10/18/21 18:28
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (10 points):
+Score += 10
+
+Problem 3 (25 points):
+BST.remove(1) failed
+	Previous tree:
+[1]
+[2]
+[3]
+[4]
+[5]
+[6]
+	Correct response:
+'[2]\n[3]\n[4]\n[5]\n[6]'
+	Student response:
+'[1]\n[2]\n[3]\n[4]\n[5]\n[6]'
+Score += 21
+
+Problem 4 (5 points):
+FileNotFoundError: [Errno 2] No such file or directory: 'English.txt'
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 41/50 = 82.0%
+
+-------------------------------------------------------------------------------
+
