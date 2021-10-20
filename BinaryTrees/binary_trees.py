@@ -9,7 +9,8 @@ October 7
 import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 from matplotlib import pyplot as plt
-import random
+import numpy as np
+import time
 
 
 class SinglyLinkedListNode:
@@ -199,17 +200,20 @@ class BST:
         
         """If the target is the root"""
         if target == self.root:
+            
             #If the root has no children
             if (self.root.left == None) and (self.root.right == None):
                 self.root = None
                 
             #If the root has one child
             elif (self.root.left == None) or (self.root.right == None):
+                
                 if self.root.left == None:
                     child = self.root.right
                 else:
                     child = self.root.left
-                child = self.root
+                    
+                self.root = child
                 self.root.prev = None
 
             #If the root has two children
@@ -436,30 +440,124 @@ def prob4():
         contents = myfile.readlines()
         for i in range(len(contents)):
             mylist.append(contents[i])
-    """ 
-    #Open the outfile to be written and write the lines of the stack in LIFO order.
-    with open(outfile, 'w') as myfile:
-        myfile.write("\n".join(mystack))
-    """
+    
     
     n_times = [2**n for n in range(3,11)]
-    
-    for n in n_times:
         
-        elements = []
-        for i in range(n):
-            elements.append(random.choice(mylist))
+    #Create Lists
+    SLLload = []
+    BSTload = []
+    AVLload = []
+    SLLsearch = []
+    BSTsearch = []
+    AVLsearch = []
     
     
+    for i in range(3,11):
+        #Set n
+        n = 2 ** i
+        #Create elements list
+        elements = np.random.choice(mylist, n, replace = False)
+        #Choose 5 random elements from the list
+        random_items = np.random.choice(elements, 5, replace = False)
         
+        
+        
+        """Singly LInked List"""
+        sll = SinglyLinkedList()
+        #Loading Singly Linked List
+        start = time.perf_counter()
+        for i in elements:
+            sll.append(i)
+        SLLload.append( time.perf_counter() - start)
+        #Searching Singly Linked List
+        start = time.perf_counter()
+        for i in range(5):
+            sll.iterative_find(random_items[i])
+        SLLsearch.append( time.perf_counter() - start)
+        
+        """BST"""
+        bst = BST()
+        #Loading BST
+        start = time.perf_counter()
+        for i in elements:
+            bst.insert(i)
+        BSTload.append(time.perf_counter() - start)
+        #Searching BST
+        start = time.perf_counter()
+        for i in range(5):
+            bst.find(random_items[i])
+        BSTsearch.append(time.perf_counter() - start)
+        
+        """AVL"""
+        avl = AVL()
+        #Loading AVL
+        start = time.perf_counter()
+        for i in elements:
+            avl.insert(i)
+        AVLload.append(time.perf_counter() - start)
+        #Searching AVL
+        start = time.perf_counter()
+        for i in range(5):
+            avl.find(random_items[i])
+        AVLsearch.append(time.perf_counter() - start)
+        
+    """Search Time Plots"""    
+    #Linear plot
+    ax1 = plt.subplot(221)
+    ax1.plot(n_times,SLLsearch, 'b.-', linewidth=1.5, markersize=10, label="Singly Linked List")
+    ax1.plot(n_times,BSTsearch, '.-',color="orange", linewidth=1.5, markersize=10, label="BST Search")
+    ax1.plot(n_times, AVLsearch, 'k.-', linewidth=1.5, markersize = 10, label = "AVL Search")     
+    ax1.legend(loc="upper left", fontsize = "x-small")
+    plt.xlabel("n",fontsize=14)
+    plt.ylabel("Seconds", fontsize=14)
+        
+    #Logrithmic Plot
+    ax2 = plt.subplot(222)
+    ax2.loglog(n_times,SLLsearch, 'b.-', linewidth=1.5, markersize=10)
+    ax2.loglog(n_times,BSTsearch, '.-',color="orange", linewidth=1.5, markersize=10)
+    ax2.loglog(n_times,AVLsearch, 'k.-', linewidth = 1.5, markersize = 10)
+    plt.xlabel("n",fontsize=14)
+    
+    """Load Time Plots"""
+    #Linear plot
+    ax3 = plt.subplot(223)
+    ax3.plot(n_times,SLLload, 'b.-', linewidth=1.5, markersize=10, label="Singly Linked List")
+    ax3.plot(n_times,BSTload, '.-',color="orange", linewidth=1.5, markersize=10, label="BST Load")
+    ax3.plot(n_times, AVLload, 'k.-', linewidth=1.5, markersize = 10, label = "AVL Load")     
+    ax3.legend(loc="upper left", fontsize = "x-small")
+    plt.xlabel("n",fontsize=14)
+    plt.ylabel("Seconds", fontsize=14)
+        
+    #Logrithmic Plot
+    ax4 = plt.subplot(224)
+    ax4.loglog(n_times,SLLload, 'b.-', linewidth=1.5, markersize=10)
+    ax4.loglog(n_times,BSTload, '.-',color="orange", linewidth=1.5, markersize=10)
+    ax4.loglog(n_times,AVLload, 'k.-', linewidth = 1.5, markersize = 10)
+    plt.xlabel("n",fontsize=14)
+    
+    
+    ax1.set_title("Linear Search", fontsize=8)
+    ax2.set_title("Logrithimic Search", fontsize=8)
+    ax3.set_title("Linear Load", fontsize=8)
+    ax4.set_title("Logrithimic Load", fontsize=8)
+    
+    plt.suptitle("Time required to load and search different data structures")
+    
+    plt.tight_layout()
+    plt.show()        
+
+
 
 
 if __name__ == "__main__":
     tree = BST()
-    for i in [4,5,2,8,6,9,1]:
+    for i in [1,2,3,4,5,6]:
         tree.insert(i)
-    print(tree)
-    tree.remove(5)
+    #print(tree)
+    tree.remove(1)
         
-    print(str(tree))
+    #print(str(tree))
+    
+    prob4()
     pass
