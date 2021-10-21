@@ -1,11 +1,12 @@
 # nearest_neighbor.py
 """Volume 2: Nearest Neighbor Search.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Math 321
+10/21/21
 """
 
 import numpy as np
+from scipy import linalg as la
 
 
 # Problem 1
@@ -20,7 +21,13 @@ def exhaustive_search(X, z):
         ((k,) ndarray) the element (row) of X that is nearest to z.
         (float) The Euclidean distance from the nearest neighbor to z.
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    
+    d = min(la.norm(X - z, axis = 1))
+    x = np.argmin(la.norm(X - z, axis = 1))
+    
+    return X[x], d
+
+
 
 
 # Problem 2: Write a KDTNode class.
@@ -33,6 +40,13 @@ class KDTNode:
         value ((k,) ndarray): a coordinate in k-dimensional space.
         pivot (int): the dimension of the value to make comparisons on.
     """
+    def __init__(self, x):
+        if type(x) != np.ndarray:
+            raise TypeError("x is not a NumPy array")
+        self.value = x
+        self.left, self.right, self.pivot = None, None, None
+        
+        
 
 # Problems 3 and 4
 class KDT:
@@ -80,7 +94,53 @@ class KDT:
                 values in the tree.
             ValueError: if data is already in the tree
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        print("inserting", data)
+        newnode = KDTNode(data)
+        
+        if len(data) != self.k and self.k is not None:
+            raise ValueError("Data does not have the right dimension")
+            
+        if self.root is None:
+            self.root = newnode
+            self.root.pivot = 0
+            self.k = len(data)
+        
+        else:
+            def step(current, data):
+                
+                if np.allclose(data, current.value):
+                    raise ValueError("Data is already in the tree")
+                
+                elif data[current.pivot] < current.value[current.pivot]:
+                    if current.left is None:
+                        current.left = newnode
+                        #newnode.prev = current 
+                        if current.pivot == self.k - 1:
+                            newnode.pivot = 0
+                        else:
+                            newnode.pivot = current.pivot + 1
+                        return
+                    else:
+                        return step(current.left, data)
+                    
+                elif data[current.pivot] >= current.value[current.pivot]:
+                    if current.right is None:
+                        current.right = newnode
+                        #newnode.prev = current 
+                        if current.pivot == self.k - 1:
+                            newnode.pivot = 0
+                        else:
+                            newnode.pivot = current.pivot + 1
+                        return 
+                    else:
+                        return step(current.right, data)
+                else:
+                    print(data[current.pivot], current.value[current.pivot])
+                    print("Something jank is happening")
+                    
+            return step(self.root, data)
+        
+
 
     # Problem 4
     def query(self, z):
@@ -93,7 +153,7 @@ class KDT:
             ((k,) ndarray) the value in the tree that is nearest to z.
             (float) The Euclidean distance from the nearest neighbor to z.
         """
-        raise NotImplementedError("Problem 4 Incomplete")
+        
 
     def __str__(self):
         """String representation: a hierarchical list of nodes and their axes.
@@ -139,3 +199,17 @@ def prob6(n_neighbors, filename="mnist_subset.npz"):
         (float): the classification accuracy.
     """
     raise NotImplementedError("Problem 6 Incomplete")
+    
+    
+    
+    
+if __name__ == "__main__":
+    X = np.random.randint(1,10,size=(7,3))
+    print(X)
+    (m,n) = np.shape(X)
+    kdt = KDT()
+    for i in range(m):
+        kdt.insert(X[i])
+        
+    print(kdt)
+
