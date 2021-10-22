@@ -1,0 +1,28 @@
+10/22/21 16:34
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+TypeError: cannot unpack non-iterable NoneType object
+
+Problem 5 (10 points):
+TypeError: KNeighborsClassifier() takes no arguments
+
+Problem 6 (5 points):
+NotImplementedError: Problem 6 Incomplete
+
+Code Quality (5 points):
+Your code printed a lot of lines that it was not supposed to. Please remove all of these print statements.
+Score += 0
+
+Total score: 20/50 = 40.0%
+
+-------------------------------------------------------------------------------
+
