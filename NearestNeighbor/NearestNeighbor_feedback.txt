@@ -26,3 +26,35 @@ Total score: 20/50 = 40.0%
 
 -------------------------------------------------------------------------------
 
+10/26/21 09:10
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+TypeError: cannot unpack non-iterable NoneType object
+
+Problem 5 (10 points):
+TypeError: KNeighborsClassifier() takes no arguments
+
+Problem 6 (5 points):
+NotImplementedError: Problem 6 Incomplete
+
+Code Quality (5 points):
+Code can be improved for KDT.insert()
+Score += 1
+
+Total score: 21/50 = 42.0%
+
+
+Comments:
+	Your code outputs several arrays that it should not. Please remove these print statements and add comments to every function to get full points on code quality.
+
+-------------------------------------------------------------------------------
+
