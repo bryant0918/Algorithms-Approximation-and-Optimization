@@ -240,7 +240,7 @@ class KNeighborsClassifier:
         """Predict the most common label of the elements of X that are nearest to z."""
         d,x = self.tree.query(x = z, k = self.n_neighbors)
         
-        return stats.mode(self.labels[x])[0]
+        return stats.mode(self.labels[x])[0][0]
         
 
 
