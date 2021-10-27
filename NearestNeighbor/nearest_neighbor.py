@@ -7,6 +7,9 @@ Math 321
 
 import numpy as np
 from scipy import linalg as la
+from scipy.spatial import KDTree
+from scipy import stats
+#from matplotlib import pyplot as plt
 
 
 # Problem 1
@@ -94,44 +97,55 @@ class KDT:
                 values in the tree.
             ValueError: if data is already in the tree
         """
-        print("inserting", data)
+        
         newnode = KDTNode(data)
         
+        #If the data isn't the right dimension
         if len(data) != self.k and self.k is not None:
             raise ValueError("Data does not have the right dimension")
-            
+        
+        #If you are inserting the first node
         if self.root is None:
             self.root = newnode
             self.root.pivot = 0
             self.k = len(data)
         
+        
         else:
             def step(current, data):
+                """Recursively step through the tree to find where to put the new node"""
                 
+                #If data is equal to the current value
                 if np.allclose(data, current.value):
                     raise ValueError("Data is already in the tree")
                 
+                #If the data is less than the current value
                 elif data[current.pivot] < current.value[current.pivot]:
+                    #If there is no left child add the new node there
                     if current.left is None:
                         current.left = newnode
-                        #newnode.prev = current 
                         if current.pivot == self.k - 1:
                             newnode.pivot = 0
                         else:
                             newnode.pivot = current.pivot + 1
                         return
+                    
+                    #If there is a left child step to the left
                     else:
                         return step(current.left, data)
                     
+                #If the data is more than the current value
                 elif data[current.pivot] >= current.value[current.pivot]:
+                    #If there is no right child add the new node there
                     if current.right is None:
                         current.right = newnode
-                        #newnode.prev = current 
                         if current.pivot == self.k - 1:
                             newnode.pivot = 0
                         else:
                             newnode.pivot = current.pivot + 1
                         return 
+                    
+                    #If there is a right child step to the right
                     else:
                         return step(current.right, data)
                 else:
@@ -154,6 +168,35 @@ class KDT:
             (float) The Euclidean distance from the nearest neighbor to z.
         """
         
+        def kdssearch(current, nearest, d):
+            if current is None:
+                return nearest, d
+            
+            x = current.value
+            i = current.pivot
+            
+            #Check if current is closer to z than nearest
+            if la.norm(x - z) < d:
+                nearest = current
+                d = la.norm(x - z)
+            #Search to the left    
+            if z[i] < x[i]:
+                nearest, d = kdssearch(current.left, nearest, d)
+                #Search to the right if needed
+                if z[i] + d > x[i]:
+                    neaerest, d = kdssearch(current.right, nearest, d)
+            #Search to the right
+            else:
+                nearest, d = kdssearch(current.right, nearest, d)
+                #Search to the left if needed
+                if z[i] - d <= x[i]:
+                    nearest, d = kdssearch(current.left, nearest, d)
+                    
+            return nearest, d
+        
+        node, d = kdssearch(self.root, self.root, la.norm(self.root.value - z))
+        return node.value, d
+    
 
     def __str__(self):
         """String representation: a hierarchical list of nodes and their axes.
@@ -182,6 +225,24 @@ class KNeighborsClassifier:
     """A k-nearest neighbors classifier that uses SciPy's KDTree to solve
     the nearest neighbor problem efficiently.
     """
+    def __init__(self, n_neighbors):
+        """Initialize constructors"""
+        self.n_neighbors = n_neighbors
+        self.tree = None
+        self.labels = None
+        
+    def fit(self, X, y):
+        """Create tree and labels"""
+        self.tree = KDTree(X)
+        self.labels = y
+        
+    def predict(self, z):
+        """Predict the most common label of the elements of X that are nearest to z."""
+        d,x = self.tree.query(x = z, k = self.n_neighbors)
+        
+        return stats.mode(self.labels[x])[0]
+        
+
 
 # Problem 6
 def prob6(n_neighbors, filename="mnist_subset.npz"):
@@ -198,18 +259,58 @@ def prob6(n_neighbors, filename="mnist_subset.npz"):
     Returns:
         (float): the classification accuracy.
     """
-    raise NotImplementedError("Problem 6 Incomplete")
+    #Extract the data
+    data = np.load("mnist_subset.npz")
+    X_train = data["X_train"].astype(np.float)
+    y_train = data["y_train"]
+    X_test = data["X_test"].astype(np.float)
+    y_test = data["y_test"]
+    """
+    plt.imshow(X_test[0].reshape((28,28)),cmap="gray")
+    plt.show()
+    """
+    #Create your KDtree and classification for the trains
+    knc = KNeighborsClassifier(n_neighbors)
+    knc.fit(X_train,y_train)
+    correct = 0
+    
+    #Iterate throught the rows of X_test
+    for i in range(len(y_test)):
+        a = knc.predict(X_test[i])
+        #See if the prediction actually equals the y_test label
+        if a == y_test[i]:
+            correct += 1
+            
+    accuracy = correct / len(y_test)
+    
+    return accuracy
     
     
+    
+    
+    
+#print(prob6(7))
     
     
 if __name__ == "__main__":
     X = np.random.randint(1,10,size=(7,3))
-    print(X)
+    y = np.random.randint(1,10, size=(7,1))
+    w = np.array([["Jared"],["Bryant"],["Ty"]])
+    #print(X)
+    #print(y)
+    """
     (m,n) = np.shape(X)
     kdt = KDT()
     for i in range(m):
         kdt.insert(X[i])
-        
-    print(kdt)
+    """    
+    #print(kdt)
+    #print(kdt.query([3,5,2]))
+    
+    knc = KNeighborsClassifier(4)
+    
+    knc.fit(X, y)
+    #print(knc.predict([2,3,4]))
+    
+    pass
 
