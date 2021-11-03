@@ -289,7 +289,7 @@ def prob6(n_neighbors, filename="mnist_subset.npz"):
     
     
     
-#print(prob6(7))
+print(prob6(5))
     
     
 if __name__ == "__main__":
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     knc = KNeighborsClassifier(4)
     
     knc.fit(X, y)
-    #print(knc.predict([2,3,4]))
+    print(knc.predict([2,3,4]))
     
     pass
 

@@ -1,10 +1,13 @@
 # breadth_first_search.py
 """Volume 2: Breadth-First Search.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Sec 002
+Halloween
 """
 
+import queue
+import networkx as nx
+from matplotlib import pyplot as plt
 
 # Problems 1-3
 class Graph:
@@ -31,7 +34,10 @@ class Graph:
         Parameters:
             n: the label for the new node.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
+        
+        if n not in self.d.keys():
+            self.d[n] = set()
+            
 
     # Problem 1
     def add_edge(self, u, v):
@@ -42,7 +48,15 @@ class Graph:
             u: a node label.
             v: a node label.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
+        if u not in self.d.keys():
+            self.d[u] = set()
+        if v not in self.d.keys():
+            self.d[v] = set()
+            
+        #Add edge on both sides
+        self.d[u].add(v)
+        self.d[v].add(u)
+        
 
     # Problem 1
     def remove_node(self, n):
@@ -54,7 +68,14 @@ class Graph:
         Raises:
             KeyError: if n is not in the graph.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
+        if n not in self.d.keys():
+            raise KeyError("Node is not in the graph")
+            
+        else:
+            self.d.pop(n)
+            for node in self.d:
+                self.d[node].discard(n)
+        
 
     # Problem 1
     def remove_edge(self, u, v):
@@ -68,7 +89,17 @@ class Graph:
             KeyError: if u or v are not in the graph, or if there is no
                 edge between u and v.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
+        
+        if (u or v) not in self.d.keys():
+            raise KeyError("Node not in dictionary")
+        if self.d[u] == set():
+            raise KeyError("No edge exists between the nodes")
+            
+        #remove edge from both sides
+        self.d[u].remove(v)
+        self.d[v].remove(u)
+            
+        
 
     # Problem 2
     def traverse(self, source):
@@ -85,7 +116,31 @@ class Graph:
         Raises:
             KeyError: if the source node is not in the graph.
         """
-        raise NotImplementedError("Problem 2 Incomplete")
+        #Initialize stuff
+        Q = queue.Queue()
+        V = []
+        M = set()
+        
+        if source not in self.d:
+            raise KeyError("The source node is not in the graph")
+        
+        #Add the first node to Queue and Marked
+        Q.put(source)
+        M.add(source)
+        
+        #Traverse as long as Q has a node in it
+        while not Q.empty():
+            current = Q.get()
+            V.append(current)
+            for value in self.d[current]:
+                if value not in M:
+                    Q.put(value)
+                    M.add(value)
+        
+        return V
+                    
+        #You may want to do M.add(source/current) and/or Q.append(source/current)
+        
 
     # Problem 3
     def shortest_path(self, source, target):
@@ -104,7 +159,11 @@ class Graph:
         Raises:
             KeyError: if the source or target nodes are not in the graph.
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        #Call traverse function and truncate it
+        V = self.traverse(source)
+        i = V.index(target)
+        return V[:i+1]
+        
 
 
 # Problems 4-6
@@ -128,7 +187,25 @@ class MovieGraph:
         Any '/' characters in movie titles have been replaced with the
         vertical pipe character | (for example, Frost|Nixon (2008)).
         """
-        raise NotImplementedError("Problem 4 Incomplete")
+        #Set Constructors
+        self.movies = set()
+        self.actors = set()
+        self.G = nx.Graph()
+        #Open read and close the file
+        inputfile = open(filename, 'r', encoding = 'utf-8')
+        contents = inputfile.readlines()
+        inputfile.close()
+        #Iterate through the lines
+        for line in contents:
+            movie_list = line.strip().split('/')
+            #In each line add the first element to the movie list and the rest to the actors
+            for i in movie_list:
+                if i == movie_list[0]:
+                    self.movies.add(i)
+                else:
+                    self.actors.add(i)
+                    self.G.add_edge(movie_list[0], i)
+                    
 
     # Problem 5
     def path_to_actor(self, source, target):
@@ -139,7 +216,18 @@ class MovieGraph:
             (list): a shortest path from source to target, including endpoints and movies.
             (int): the number of steps from source to target, excluding movies.
         """
-        raise NotImplementedError("Problem 5 Incomplete")
+        #Only do this if there is a path and then call the nx.shorest_path
+        if nx.has_path(self.G, source, target) == True:
+            path = nx.shortest_path(self.G, source, target)
+            steps = nx.shortest_path_length(self.G, source, target)
+            #Take out the movies between every actor
+            steps = steps // 2
+            return path, steps
+        else:
+            raise KeyError("There is not a path between source and", str(target))
+            
+        
+        
 
     # Problem 6
     def average_number(self, target):
@@ -150,4 +238,42 @@ class MovieGraph:
         Returns:
             (float): the average path length from actor to target.
         """
-        raise NotImplementedError("Problem 6 Incomplete")
+        #Find shortest path between target and everyone else
+        lengths = nx.shortest_path_length(self.G, target)
+        sums = []
+        
+        #Iterate through every actor's shortest bath
+        for i in lengths.keys():
+            
+            if lengths[i] % 2 == 0:
+                sums.append(lengths[i] // 2)
+            
+        avg = sum(sums) / len(sums)
+        
+        #Plot a histogram, looks like most people are connected by 2 or 3 movies
+        plt.hist(sums, bins = [i-.5 for i in range(8)])
+        plt.title("Path lengths of every actor to", str(target))
+        plt.ylabel("Number of actors")
+        plt.xlabel("Length of shortest path")
+        plt.show()        
+        
+        return avg
+            
+        
+        
+        
+if __name__ == "__main__":
+    graph = Graph()
+    graph.add_edge('u', 'v')
+    graph.add_node('n')
+    graph.add_edge('u','n')
+    #print(str(graph))
+    #print(graph.traverse('u'))
+    #print(graph.shortest_path('u','n'))
+    test = MovieGraph()
+    #print(len(test.movies))
+    #print(test.average_number("Kevin Bacon"))
+    #print(test.path_to_actor("Kevin Bacon", "Tom Holland"))
+    
+    pass
+    
