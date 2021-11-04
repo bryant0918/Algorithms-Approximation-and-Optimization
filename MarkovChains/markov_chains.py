@@ -1,8 +1,8 @@
 # markov_chains.py
 """Volume 2: Markov Chains.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Sec 002
+November 4
 """
 
 import numpy as np
@@ -13,7 +13,10 @@ class MarkovChain:
     """A Markov chain with finitely many states.
 
     Attributes:
-        (fill this out)
+        self.A: A (n,n) matrix that should be column-stochaastic
+        self.labels: A list of the labels
+        self.dictionary: A dictionary where the keys are the rows of A
+            and the values are the states
     """
     # Problem 1
     def __init__(self, A, states=None):
@@ -39,7 +42,21 @@ class MarkovChain:
                             to B [   .5      .2   ]
         and the label-to-index dictionary is {"A":0, "B":1}.
         """
-        raise NotImplementedError("Problem 1 Incomplete")
+        self.dictionary = {}
+        if np.allclose(A.sum(axis=0), np.ones(A.shape[1])) == False:
+            raise ValueError("A is not column stochastic")
+            
+        if states == None:
+            m,n = A.shape
+            states = [i for i in range(n)]
+            
+        for i, state in enumerate(states):
+            self.dictionary[state] = i
+            
+        self.A = A
+        self.labels = states
+            
+        
 
     # Problem 2
     def transition(self, state):
@@ -52,7 +69,15 @@ class MarkovChain:
         Returns:
             (str): the label of the state to transitioned to.
         """
-        raise NotImplementedError("Problem 2 Incomplete")
+        
+        index = self.dictionary[state]
+        
+        newrow = np.random.multinomial(1, np.array(self.A[index]))
+        
+        newindex = np.argmax(newrow)
+        
+        return self.dictionary.get(newindex)
+        
 
     # Problem 3
     def walk(self, start, N):
@@ -66,7 +91,18 @@ class MarkovChain:
         Returns:
             (list(str)): A list of N state labels, including start.
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        
+        labels = []
+        state = start
+        for i in range(N):
+            labels.append(self.transition(state))
+            state = labels[i]
+            
+            
+        labels.insert(0,start)
+        
+        return labels
+        
 
     # Problem 3
     def path(self, start, stop):
@@ -80,7 +116,17 @@ class MarkovChain:
         Returns:
             (list(str)): A list of state labels from start to stop.
         """
-        raise NotImplementedError("Problem 3 Incomplete")
+        
+        labels = []
+        state = start
+        while state != stop:
+            labels.append(self.transition(state))
+            state = labels[len(labels) - 1]
+            
+        labels.insert(0,start)
+        
+        return labels
+        
 
     # Problem 4
     def steady_state(self, tol=1e-12, maxiter=40):
@@ -96,7 +142,36 @@ class MarkovChain:
         Raises:
             ValueError: if there is no convergence within maxiter iterations.
         """
-        raise NotImplementedError("Problem 4 Incomplete")
+        
+        m,n = self.A.shape
+        
+        x = np.random.random(n)
+        
+        x /= sum(x)
+        x1 = self.A @ x
+        
+            
+        for i in range(maxiter):
+            
+            x = x1
+            x1 = self.A @ x
+            
+            dif = []
+            for k in range(n):
+                dif.append(abs(x[k]-x1[k])) 
+            sm = sum(dif)
+
+            if sm < tol:
+                break
+            
+            if i == (maxiter - 1):
+                raise ValueError("Ak does not converge")
+            
+            
+        return x
+    
+    
+        
 
 class SentenceGenerator(MarkovChain):
     """A Markov-based simulator for natural language.
@@ -110,7 +185,7 @@ class SentenceGenerator(MarkovChain):
         contents. You may assume that the file has one complete sentence
         written on each line.
         """
-        raise NotImplementedError("Problem 5 Incomplete")
+        
 
     # Problem 6
     def babble(self):
@@ -125,4 +200,12 @@ class SentenceGenerator(MarkovChain):
             >>> print(yoda.babble())
             The dark side of loss is a path as one with you.
         """
-        raise NotImplementedError("Problem 6 Incomplete")
+      
+if __name__ == "__main__":
+    A = np.array([[.7,.6],[.3,.4]])
+    mc = MarkovChain(A)
+    #print(mc.transition(0))
+    #print(mc.walk(0,10))
+    #print(mc.path(0,0))
+    print(mc.steady_state(maxiter=100))
+    
