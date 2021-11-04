@@ -10,3 +10,43 @@ breadth_first_search.py has not been modified yet
 
 -------------------------------------------------------------------------------
 
+11/04/21 09:50
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (10 points):
+Score += 10
+
+Problem 3 (10 points):
+Graph.shortest_path('A', C) failed
+	Graph: {'A': {'D', 'B'}, 'B': {'D', 'A'}, 'C': {'D'}, 'D': {'C', 'A', 'B'}}
+	Correct response: "['A', 'D', 'C']"
+	Student response: "['A', 'D', 'B', 'C']"
+Graph.shortest_path('A', G) failed
+	Graph: {'A': {'F', 'B'}, 'B': {'A', 'C'}, 'C': {'D', 'B'}, 'D': {'E', 'C'}, 'E': {'D', 'F'}, 'F': {'E', 'G', 'A'}, 'G': {'F', 'A'}}
+	Correct response: "['A', 'F', 'G']"
+	Student response: "['A', 'F', 'B', 'E', 'G']"
+Graph.shortest_path('A', N) failed
+	Graph: {'A': {'C', 'B'}, 'B': {'D', 'E', 'A'}, 'C': {'F', 'G', 'A'}, 'D': {'H', 'I', 'B'}, 'E': {'K', 'J', 'B'}, 'F': {'M', 'L', 'C'}, 'G': {'N', 'O', 'C'}, 'H': {'D'}, 'I': {'D'}, 'J': {'E'}, 'K': {'E'}, 'L': {'F'}, 'M': {'F'}, 'N': {'G'}, 'O': {'G'}}
+	Correct response: "['A', 'C', 'G', 'N']"
+	Student response: "['A', 'C', 'B', 'F', 'G', 'D', 'E', 'M', 'L', 'N']"
+Graph.shortest_path('A', L) failed
+	Graph: {'A': {'B'}, 'B': {'D', 'C'}, 'C': {'D', 'B'}, 'D': {'E', 'B'}, 'E': {'F', 'G'}, 'F': {'H', 'E'}, 'H': {'F'}, 'G': {'E', 'I', 'J'}, 'I': {'J', 'G'}, 'J': {'K', 'J', 'G'}, 'K': {'L', 'J'}, 'L': {'K'}}
+	Correct response: "['A', 'B', 'D', 'E', 'G', 'J', 'K', 'L']"
+	Student response: "['A', 'B', 'D', 'C', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']"
+Score += 2
+
+Problem 5 (10 points):
+Score += 10
+
+Problem 6 (10 points):
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 32/50 = 64.0%
+
+-------------------------------------------------------------------------------
+
