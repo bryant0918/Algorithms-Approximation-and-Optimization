@@ -27,3 +27,32 @@ Total score: 15/50 = 30.0%
 
 -------------------------------------------------------------------------------
 
+11/09/21 09:28
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+MarkovChain.transition() failed for A = I
+	Correct response: 'B'
+	Student response: 'None'
+KeyError: None
+
+Problem 3 (10 points):
+KeyError: None
+
+Problem 4 (10 points):
+Score += 10
+
+Problems 5-6 (15 points):
+Output is 'None'
+Score += 0
+
+Code Quality (5 points):
+Code can be improved for SentenceGenerator.__init__()
+Score += 0
+
+Total score: 15/50 = 30.0%
+
+-------------------------------------------------------------------------------
+
