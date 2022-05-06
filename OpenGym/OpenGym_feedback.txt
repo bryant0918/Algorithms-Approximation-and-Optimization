@@ -1,0 +1,56 @@
+03/07/22 19:20
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+YOur graph is a bit off, the best win ration should be above 12. Hint: the action you take depends on the current card count. 
+Score += 3
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (15 points):
+Score += 15
+
+Problem 5 (10 points):
+Score += 10
+
+Code Quality (5 points):
+Make sure to add meaningful code comments to your functions
+Score += 0
+
+Total score: 43/50 = 86.0%
+
+-------------------------------------------------------------------------------
+
+03/10/22 10:03
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (15 points):
+Score += 15
+
+Problem 5 (10 points):
+Score += 10
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 50/50 = 100.0%
+
+Excellent!
+
+
+Comments:
+	Nice!
+
+-------------------------------------------------------------------------------
+

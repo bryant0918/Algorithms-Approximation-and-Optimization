@@ -42,10 +42,14 @@ class MarkovChain:
                             to B [   .5      .2   ]
         and the label-to-index dictionary is {"A":0, "B":1}.
         """
+        #make a dictionary
         self.dictionary = {}
+        
+        #Check if A is column stochastic
         if np.allclose(A.sum(axis=0), np.ones(A.shape[1])) == False:
             raise ValueError("A is not column stochastic")
             
+        #Create your attributes
         if states == None:
             m,n = A.shape
             states = [i for i in range(n)]
@@ -71,12 +75,14 @@ class MarkovChain:
         """
         
         index = self.dictionary[state]
+        #Take a random available entry
+        newcolumn = np.random.multinomial(1, np.array(self.A[:,index]))
         
-        newrow = np.random.multinomial(1, np.array(self.A[index]))
+        newindex = np.argmax(newcolumn)
         
-        newindex = np.argmax(newrow)
+        #print(self.labels[newindex])
         
-        return self.dictionary.get(newindex)
+        return self.labels[newindex]
         
 
     # Problem 3
@@ -94,7 +100,8 @@ class MarkovChain:
         
         labels = []
         state = start
-        for i in range(N):
+        #Walk through the nodes N-1 times calling transition
+        for i in range(N-1):
             labels.append(self.transition(state))
             state = labels[i]
             
@@ -119,10 +126,13 @@ class MarkovChain:
         
         labels = []
         state = start
+        #Walk through the nodes until you reach stop
         while state != stop:
+            #print(state)
             labels.append(self.transition(state))
             state = labels[len(labels) - 1]
             
+        #Insert start to the paths visited
         labels.insert(0,start)
         
         return labels
@@ -147,10 +157,11 @@ class MarkovChain:
         
         x = np.random.random(n)
         
+        #Normalize x
         x /= sum(x)
         x1 = self.A @ x
         
-            
+        # Iterate at least maxiter times
         for i in range(maxiter):
             
             x = x1
@@ -160,10 +171,12 @@ class MarkovChain:
             for k in range(n):
                 dif.append(abs(x[k]-x1[k])) 
             sm = sum(dif)
-
+            
+            #If the sum is less than the tolerance it is good enough
             if sm < tol:
                 break
             
+            #If we never get below the tolerance we say it doesn't converge
             if i == (maxiter - 1):
                 raise ValueError("Ak does not converge")
             
@@ -186,6 +199,45 @@ class SentenceGenerator(MarkovChain):
         written on each line.
         """
         
+        #Open and read the file lines
+        with open(filename, 'r') as myfile:
+            '''Algorithm 1.1'''
+            sentences = myfile.read().split('\n') 
+            uniquewords = set()
+            # get the set of unique words
+            for sentence in sentences:
+                words = sentence.split()
+                uniquewords.update(words)  
+            
+            # Add start and stop
+            uniquewords = list(uniquewords)
+            uniquewords = ['$tart'] + uniquewords + ['$top']  
+            n = len(uniquewords)
+            
+            #Create my dictionary of indices and uniquewords
+            dictionary = {word: i for i, word in enumerate(uniquewords)}
+            
+            # initialize the transition matrix
+            M = np.zeros((n, n))  
+            
+            #Iterate through sentences
+            for sentence in sentences:
+                words = sentence.split()
+                words = ['$tart'] + words + ['$top']
+                # add 1 to the entry of the transition matrix that corresponds to transitioning x to y
+                for i in range(len(words) - 1):
+                    x, y = words[i], words[i + 1]
+                    j, k = dictionary[x], dictionary[y]
+                    M[k][j] += 1  
+                
+            #Transition stop to start
+            M[-1][-1] = 1  
+            #Normalize each column
+            M /= np.sum(M, axis=0) 
+            #Super impose to make things easier
+            super().__init__(M, uniquewords)
+        
+        
 
     # Problem 6
     def babble(self):
@@ -200,12 +252,30 @@ class SentenceGenerator(MarkovChain):
             >>> print(yoda.babble())
             The dark side of loss is a path as one with you.
         """
+        #Get a path from start to stop
+        sentence = self.path("$tart", "$top")
+        
+        #Remove start and stop cuz we don't want to read that
+        sentence.remove("$tart")
+        sentence.remove("$top")
+        
+        yodatalk = ' '.join(sentence)
+        
+        
+        return yodatalk
       
 if __name__ == "__main__":
     A = np.array([[.7,.6],[.3,.4]])
     mc = MarkovChain(A)
     #print(mc.transition(0))
-    #print(mc.walk(0,10))
+    print(mc.walk(0,10))
     #print(mc.path(0,0))
-    print(mc.steady_state(maxiter=100))
+    #print(mc.steady_state(maxiter=100))
+    
+    yoda = SentenceGenerator("The Book of Mormon.txt")
+    for _ in range(10):
+        print(yoda.babble())
+    
+    
+    pass
     

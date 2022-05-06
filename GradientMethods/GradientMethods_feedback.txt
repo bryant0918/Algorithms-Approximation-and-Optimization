@@ -1,0 +1,90 @@
+02/21/22 20:11
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (10 points):
+Score += 10
+
+Problem 3 (10 points):
+nonlinear_conjugate_gradient() failed for f = xQx/2 - bx where Q is 10x10 (Df(x) != 0)
+	Correct response: [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+	Student response: [-0.     0.    -0.     0.001 -0.     0.001 -0.002 -0.    -0.002  0.001]
+Score += 6
+
+Problem 4 (5 points):
+TypeError: Invalid return type 'tuple'
+
+Problems 5 and 6 (10 points):
+NotImplementedError: Problem 6 Incomplete
+
+Code Quality (5 points):
+Make sure to add meaningful code comments to all functions
+Score += 0
+
+Total score: 26/50 = 52.0%
+
+-------------------------------------------------------------------------------
+
+02/24/22 09:26
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (10 points):
+Score += 10
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (5 points):
+prob4() failed
+	Correct response: [-3482258.          15.017       -0.036       -2.02        -1.033
+       -0.051     1829.156]
+	Student response: [-3482258.          15.062       -0.036       -2.02        -1.033
+       -0.051     1829.151]
+Score += 5
+
+Problems 5 and 6 (10 points):
+TypeError: Invalid return type 'NoneType'
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 40/50 = 70.0%
+
+
+Comments:
+	I will give you full points for problem 4 because imo that's close enough. It looks like for problem 6 you forgot to return the probability of a failure given that the temperature is 31 degrees. P(F | T=31) 
+
+-------------------------------------------------------------------------------
+
+02/24/22 13:30
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (10 points):
+Score += 10
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (5 points):
+Score += 5
+
+Problems 5 and 6 (10 points):
+score += 8
+TypeError: Invalid return type 'NoneType'
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 48/50 = 96.0%
+
+
+Comments:
+	Forgot to return P(F | T=31) in problem 6
+
+-------------------------------------------------------------------------------
+

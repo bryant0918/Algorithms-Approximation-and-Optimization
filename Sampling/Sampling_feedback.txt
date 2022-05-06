@@ -1,0 +1,45 @@
+11/20/21 09:15
+
+sampling.ipynb has not been modified yet
+
+-------------------------------------------------------------------------------
+
+11/24/21 14:09
+
+sampling.ipynb has not been modified yet
+
+-------------------------------------------------------------------------------
+
+11/30/21 13:27
+
+sampling.ipynb has not been modified yet
+
+-------------------------------------------------------------------------------
+
+12/03/21 16:47
+
+Bernoulli Sampling (10 points):
+Be sure to label both axes of the plot.
+Score += 8
+
+Non-uniform Prior (10 points):
+You were supposed to create a plot for p=0.9 and p=0.4, but you created plots for p=0.9 and p=0.5. Also your axes are not label again.
+Score += 7
+
+Weather Forecast (10 points):
+Score += 10
+
+Posterior Sampling (5 points):
+Score += 5
+
+Height Model (10 points):
+Score += 10
+
+Code Quality (5 points):
+You do not have any comments in your code.
+Score += 2
+
+Total score: 42/50 = 84.0%
+
+-------------------------------------------------------------------------------
+

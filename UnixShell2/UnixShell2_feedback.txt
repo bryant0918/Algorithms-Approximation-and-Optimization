@@ -1,0 +1,106 @@
+11/12/21 16:43
+
+Problem 1 (5 points):
+File 'sortedwords.txt' not found
+Score += 0
+
+Problem 2 (5 points):
+File 'log.txt' not found
+Score += 0
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+FileNotFoundError: [Errno 2] No such file or directory: '/home/reece/Desktop/ACME/TA/BryantMcArthur/UnixShell2/Shell2'
+
+Problem 5 (5 points):
+File '0906-13-00903.jpg' not found
+File 'hubble_image.jpg' not found
+File 'Optimal_Reentry_Spacecraft.pdf' not found
+Score += 0
+
+Problem 6 (5 points):
+Score += 5
+
+Problem 7 (5 points):
+File 'date_modified.txt' not found
+Score += 0
+
+Code Quality (5 points):
+Code can be improved for grep()
+Score += 3
+
+Total score: 18/50 = 36.0%
+
+-------------------------------------------------------------------------------
+
+11/16/21 12:39
+
+Problem 1 (5 points):
+File 'sortedwords.txt' not found
+Score += 0
+
+Problem 2 (5 points):
+File 'log.txt' not found
+Score += 0
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+FileNotFoundError: [Errno 2] No such file or directory: '/home/reece/Desktop/ACME/TA/BryantMcArthur/UnixShell2/Shell2'
+
+Problem 5 (5 points):
+File '0906-13-00903.jpg' not found
+File 'hubble_image.jpg' not found
+File 'Optimal_Reentry_Spacecraft.pdf' not found
+Score += 0
+
+Problem 6 (5 points):
+Score += 5
+
+Problem 7 (5 points):
+File 'date_modified.txt' not found
+Score += 0
+
+Code Quality (5 points):
+Code can be improved for grep()
+Score += 3
+
+Total score: 18/50 = 36.0%
+
+-------------------------------------------------------------------------------
+
+11/18/21 18:28
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 5 (5 points):
+Score += 5
+
+Problem 6 (5 points):
+Score += 5
+
+Problem 7 (5 points):
+Score += 5
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 50/50 = 100.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+

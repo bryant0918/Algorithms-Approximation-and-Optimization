@@ -1,0 +1,62 @@
+04/04/22 22:56
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 4 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 5 (10 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 6 (10 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 7 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Code Quality (5 points):
+Remember to add meaningful comments to all functions
+Score += 0
+
+Total score: 10/50 = 20.0%
+
+-------------------------------------------------------------------------------
+
+04/04/22 23:03
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 4 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 5 (10 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 6 (10 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Problem 7 (5 points):
+TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+Code Quality (5 points):
+make sure to add meaningful code comments to every function
+Score += 0
+
+Total score: 10/50 = 20.0%
+
+-------------------------------------------------------------------------------
+

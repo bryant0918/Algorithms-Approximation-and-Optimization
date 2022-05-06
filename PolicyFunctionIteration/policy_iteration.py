@@ -1,9 +1,11 @@
 # policy_iteration.py
 """Volume 2: Policy Function Iteration.
-<Name>
-<Class>
-<Date>
+Bryant McArthur
+Sec 002
+April 7
 """
+
+import numpy as np
 
 # Intialize P for test example
 #Left =0
@@ -48,7 +50,31 @@ def value_iteration(P, nS ,nA, beta = 1, tol=1e-8, maxiter=3000):
        v (ndarray): The discrete values for the true value function.
        n (int): number of iterations
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    V_old = np.zeros(nS)
+    
+    for i in range(maxiter):
+        V_new = np.copy(V_old)
+        
+        for s in range(nS):
+            sa_vector = np.zeros(nA)
+            
+            for a in range(nA):
+                for tuple_info in P[s][a]:
+                    #get probability, nextstate, reward and is_terminal
+                    p, s_, u, _ = tuple_info
+                    #Sum up the possible end states and rewards with given action
+                    sa_vector[a] += (p*(u+beta*V_new[s_]))
+            #Add the max value to the value function
+            V_old[s] = np.max(sa_vector)
+            
+        if np.linalg.norm(V_old-V_new) < tol:
+            return V_old, i + 1
+        
+            
+    return V_old, i + 1
+
+v, i = value_iteration(P,4,4)
+                
 
 # Problem 2
 def extract_policy(P, nS, nA, v, beta = 1.0):
@@ -65,7 +91,22 @@ def extract_policy(P, nS, nA, v, beta = 1.0):
     Returns:
         policy (ndarray): which direction to move in from each square.
     """
-    raise NotImplementedError("Problem 2 Incomplete")
+    policy = np.zeros(nS)
+    for s in range(nS):
+        sa_vector = np.zeros(nA)
+        for a in range(nA):
+            for tuple_info in P[s][a]:
+                #get probability, nextstate, reward and is_terminal
+                p, s_, u, _ = tuple_info
+                #Sum up the possible end states and rewards with given action
+                sa_vector[a] += (p*(u+beta*v[s_]))
+        #Get the policy for the given state that maximizes
+        policy[s] = np.argmax(sa_vector)
+    
+    
+    return policy
+
+#print(extract_policy(P,4,4,v))
 
 # Problem 3
 def compute_policy_v(P, nS, nA, policy, beta=1.0, tol=1e-8):
@@ -83,7 +124,7 @@ def compute_policy_v(P, nS, nA, policy, beta=1.0, tol=1e-8):
     Returns:
         v (ndarray): The discrete values for the true value function.
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    return
 
 # Problem 4
 def policy_iteration(P, nS, nA, beta=1, tol=1e-8, maxiter=200):

@@ -202,17 +202,25 @@ class LinkedList:
         
         target = self.find(data)
         head = self.head
+        tail = self.tail
         
         #If we are removing the head
         if target == head:
             self.head = target.next
             head = None
-            return
+        
+        #If we are removing the last node
+        elif target == tail:
+            self.tail = target.prev
+            target.prev.next = None
+            tail = None
         
         #If we are removing any other node
         else:
             target.prev.next = target.next
             target.next.prev = target.prev
+            
+        
         
         #Always adjust the length
         self.length -= 1
@@ -244,21 +252,24 @@ class LinkedList:
         newnode = LinkedListNode(data)
         oldnode = self.get(index)
         
-        #If we are inserting at the head
-        if index == 0:
-            self.head.prev = newnode
-            self.head = newnode
-            self.head.next = oldnode
-            
         #If we are inserting at the tail
-        elif index == len(L):
+        if index == self.length:
             self.append(data)
-            
-        #If we are inserting in the middle
+            return
+        
         else:
-            oldnode.prev.next = newnode
-            oldnode.prev = newnode
-            newnode.next = oldnode
+            #If we are inserting at the head
+            if index == 0:
+                self.head.prev = newnode
+                self.head = newnode
+                self.head.next = oldnode
+                
+                
+            #If we are inserting in the middle
+            else:
+                oldnode.prev.next = newnode
+                oldnode.prev = newnode
+                newnode.next = oldnode
         
         #Always adjust the length
         self.length += 1
@@ -294,6 +305,13 @@ class Deque(LinkedList):
         if self.length == 0:
             raise ValueError("The deque is empty")
         
+        #If deque has only one element
+        if self.length == 1:
+            poppednode = self.tail
+            self.tail = None
+            self.head = None
+            self.length = 0
+        
         #We are removing the tail node, and returning it's value
         else:
             poppednode = self.tail            
@@ -301,7 +319,7 @@ class Deque(LinkedList):
             self.tail = self.tail.prev
             self.length -= 1            #Always remember to adjust the length
             
-            return poppednode.value
+        return poppednode.value
         
     def popleft(self):
         """
@@ -365,7 +383,7 @@ def prob7(infile, outfile):
      
     #Open the outfile to be written and write the lines of the stack in LIFO order.
     with open(outfile, 'w') as myfile:
-        myfile.write("\n".join(mystack))
+        myfile.write("".join(mystack))
         
     
     
@@ -377,25 +395,28 @@ def prob7(infile, outfile):
 if __name__ == "__main__":
     
     L = LinkedList()
+    L.insert(0,10)
+    print("L:",L)
     
     for x in ['a', 'b', 'c', 'd', 'e']:
         L.append(x)
     
-    #node = L.find('c')
-    #node = L.get(3)
-    
-    L.remove('b')
-    
-    #print(str(L))
     
     D = Deque()
-    for x in [1]:
+    for x in [1,7]:
         D.append(x)
     D.appendleft(3)
     print(D)
     print(D.pop())
     print(D)
     print(D.popleft())
+    print(D)
+    print(D.pop())
+    print("D:", D)
+    print(len(D))
+    D.appendleft(63)
+    print(D)
+    print(D.pop())
     print(D)
         
     
